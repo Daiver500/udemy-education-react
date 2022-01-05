@@ -1,3 +1,4 @@
+import {Component, StrictMode} from 'react'; // если писать компоненты на классах, то понадобится такая строчка
 import logo from './logo.svg';
 import './App.css';
 
@@ -6,8 +7,28 @@ const Header = () => {  // реакт компонент
 }
 
 const Field = () => {
-  return <input placeholder="name" type="text"></input>
+  const holder = "Enter here"
+  const styledField = {         // стили создаются при помощи объекта
+    width: "300px"
+  } 
+  return <input 
+          placeholder={holder} 
+          type="text" 
+          style={styledField}></input>
 }
+
+/*class Field extends Component {      // можно писать компоненты на классах
+   render() {                          // обязательно долежн быть метод render
+    const holder = "Enter here"
+    const styledField = {         
+      width: "300px"
+    } 
+    return <input 
+    placeholder={holder} 
+    type="text" 
+    style={styledField}></input>
+   }
+}*/
 
 function Button () {                               // можно использовать как обычные так и стрелочные функции
    const text = "login"
@@ -25,7 +46,7 @@ function Button () {                               // можно использ�
    }
   }
    
-  return <button>{test()}</button>
+  return <button tabIndex="0">{test()}</button>
 
    // return <button tabIndex="0">{logged ?  "Enter" : text}</button>  // if else нельзя использовать внутри фигурных скобок, можно использовать только тернартный оператор
 }
@@ -33,7 +54,9 @@ function Button () {                               // можно использ�
 function App() {    // реакт компоненты пишутся с большой буквы и могут переиспользоваться, компонент это функция которая возвращает JSX элементы
   return (    // многострочный элемент поэтому в круглых скобках
     <div className="App">   {/*один родитель*/}
-       <Header></Header>
+      <StrictMode>
+        <Header></Header>
+      </StrictMode>
        <Field></Field>
        <Button></Button>
     </div>
@@ -41,3 +64,4 @@ function App() {    // реакт компоненты пишутся с бол�
 }
 
 export default App;
+export {Header};

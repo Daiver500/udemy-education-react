@@ -65,9 +65,10 @@ class WhoAmIClass extends Component {
       text: "+++",
       position: ''
     }
+    // this.nextAge = this.nextAge.bind(this)         // используется когда функция не стрелочная, когда стрелочная не нужно, если увеличится количество методов их всех придется bind, если они используются в обработчиках событий 
   }   
   
-  nextAge = () => {                // только стрелочная функция
+  nextAge = () => {                // когда функция не стрелочная используется bind (см выше), но это устаревший метод
     this.setState({                 // команда для изменения состояния, поменяет только то, что указано тут, все остальное оставит как есть                                                                                                               
       years: this.state.years + 1
     })
@@ -76,24 +77,25 @@ class WhoAmIClass extends Component {
     }))
   }
 
-  commitInputChanges = (evt) => {
+  commitInputChanges = (evt, color) => {
+    console.log(color)
     this.setState ({
       position: evt.target.value
     })
   }
    
-  render() {
+  render() {                             // когда вызывается setState каждый раз вызывается render
     const {name, surname, link} = this.props
     const {position, text, years} = this.state
-    console.log(this)
     return (                               
       <div>
         <button onClick={this.nextAge}>{text}</button>      {/* пример обработчика событий */}
+        {/* <button onClick={() => this.nextAge()}>{text}</button>  также, когда функция не стрелочная ее можно вызвать через анонимную функцию*/}
         <h1>My name is {name}, surname - {surname}, age - {years}, position - {position}</h1>
         <a href={link}>Мой профиль</a>
         <form>
           <span>Введите должность</span>
-          <input type="text" onChange={this.commitInputChanges}></input>          {/*в реакте всегда используется onChange */}
+          <input type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию */}
         </form>
       </div>
     )

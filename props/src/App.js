@@ -50,8 +50,8 @@ function App() {
        <WhoAmI name={{firstName: "Alex"}} surname="Pupkin" link="vk.com"></WhoAmI>
        <WhoAmINext name={() => {return "Ivan"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
        <WhoAmINext name={() => {return "Vasya"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
-       <WhoAmIClass name="T800" surname="Ivanov" link="facebook.com"></WhoAmIClass>            {/* props изменить иднамически нельзя!!! */}
-       <WhoAmIClass name="T1000" surname="Ivanov" link="facebook.com"></WhoAmIClass> 
+       <WhoAmIClass name="T800" surname="Ivanov" link="facebook.com"></WhoAmIClass>            {/* props изменить динамически нельзя!!! */}
+       <WhoAmIClass name="T1000" surname="Pupkin" link="facebook.com"></WhoAmIClass> 
     </div>
   );
 }
@@ -62,7 +62,8 @@ class WhoAmIClass extends Component {
     super(props)                                   // чтобы мы могли их использоваться передаем через super
     this.state = {                                 // состояние это объект
       years: 27,
-      text: "+++"
+      text: "+++",
+      position: ''
     }
   }   
   
@@ -74,14 +75,26 @@ class WhoAmIClass extends Component {
       years: state.years + 1
     }))
   }
+
+  commitInputChanges = (evt) => {
+    this.setState ({
+      position: evt.target.value
+    })
+  }
    
   render() {
     const {name, surname, link} = this.props
+    const {position, text, years} = this.state
+    console.log(this)
     return (                               
       <div>
-        <button onClick={this.nextAge}>{this.state.text}</button>
-        <h1>My name is {name}, surname - {surname}, age - {this.state.years}</h1>
+        <button onClick={this.nextAge}>{text}</button>      {/* пример обработчика событий */}
+        <h1>My name is {name}, surname - {surname}, age - {years}, position - {position}</h1>
         <a href={link}>Мой профиль</a>
+        <form>
+          <span>Введите должность</span>
+          <input type="text" onChange={this.commitInputChanges}></input>          {/*в реакте всегда используется onChange */}
+        </form>
       </div>
     )
   }

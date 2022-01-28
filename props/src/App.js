@@ -1,5 +1,5 @@
 import './App.css';
-import { Component } from "react";
+import { Component, Fragment } from "react"; // Fragment может использоваться для замены родительского элемента в верстке, также используется пустой тег
 
 // КОМПОНЕНТЫ (ФУНКЦИОНАЛЬНЫЕ И КЛАССОВЫЕ)
 
@@ -42,6 +42,7 @@ const WhoAmINext = ({name, surname, link}) => {               // аргумен�
 
 function App() {
   return (
+    //<Fragment>                                                           {/** на fragment можно заменить лишние элементы, к примеру <div></div> */}
     <div className="App">
        <WhoAmIFirst name="Petr" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
        <WhoAmIFirst name="Semen" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
@@ -53,6 +54,7 @@ function App() {
        <WhoAmIClass name="T800" surname="Ivanov" link="facebook.com"></WhoAmIClass>            {/* props изменить динамически нельзя!!! */}
        <WhoAmIClass name="T1000" surname="Pupkin" link="facebook.com"></WhoAmIClass> 
     </div>
+    // </Fragment>
   );
 }
 
@@ -88,7 +90,7 @@ class WhoAmIClass extends Component {
     const {name, surname, link} = this.props
     const {position, text, years} = this.state
     return (                               
-      <div>
+      <>                                                       {/* также вместо Fragment можно использовать пустой тег */}   
         <button onClick={this.nextAge}>{text}</button>      {/* пример обработчика событий */}
         {/* <button onClick={() => this.nextAge()}>{text}</button>  также, когда функция не стрелочная ее можно вызвать через анонимную функцию*/}
         <h1>My name is {name}, surname - {surname}, age - {years}, position - {position}</h1>
@@ -97,7 +99,7 @@ class WhoAmIClass extends Component {
           <span>Введите должность</span>
           <input type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию */}
         </form>
-      </div>
+      </>
     )
   }
 }

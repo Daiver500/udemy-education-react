@@ -1,5 +1,6 @@
 import './App.css';
 import { Component, Fragment } from "react"; // Fragment может использоваться для замены родительского элемента в верстке, также используется пустой тег
+import styled from "styled-components";
 
 // КОМПОНЕНТЫ (ФУНКЦИОНАЛЬНЫЕ И КЛАССОВЫЕ)
 
@@ -40,10 +41,49 @@ const WhoAmINext = ({name, surname, link}) => {               // аргумен�
   )
 }
 
+// Styled components (использование стилей прямо в JS), такие компоненты поддерживают свои пропсы
+
+const Wrapper = styled.div `                 
+  width: 600px;
+  margin: 80px auto 0 auto;
+`;
+
+// ссылки внутри родительского элемента будут определенного стиля, таким образом нам не надо стилизовать каждый компонент
+const EmptyItem = styled.div `
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  a {
+    display: block;
+    margin: 0 10px 0;
+    color: ${props => props.active ? "orange" : "black" /**здесь проверяем есть ли active и в зависимости от этого назначаем цвет */}
+  }
+  input {
+    display: block;
+    margin-top: 10px;
+  }
+`;
+
+const Header = styled.h2 `
+  font-size: 22px;
+`;
+
+// можно экспортировать стили
+
+export const Button = styled.button `                  
+  display: block;
+  padding:  5px 15px;
+  background-color: gold;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2)
+`;
+
 function App() {
   return (
     //<Fragment>                                                           {/** на fragment можно заменить лишние элементы, к примеру <div></div> */}
-    <div className="App">
+    // <div className="App">
+    <Wrapper>                                                               
        <WhoAmIFirst name="Petr" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
        <WhoAmIFirst name="Semen" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
        <WhoAmI name={{firstName: "John"}} surname="Ivanov" link="facebook.com"></WhoAmI>    {/*объект props будет формироваться из тех атрибутов, по сути это и есть props
@@ -53,7 +93,8 @@ function App() {
        <WhoAmINext name={() => {return "Vasya"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
        <WhoAmIClass name="T800" surname="Ivanov" link="facebook.com"></WhoAmIClass>            {/* props изменить динамически нельзя!!! */}
        <WhoAmIClass name="T1000" surname="Pupkin" link="facebook.com"></WhoAmIClass> 
-    </div>
+    </Wrapper>
+    //</div>
     // </Fragment>
   );
 }
@@ -90,16 +131,16 @@ class WhoAmIClass extends Component {
     const {name, surname, link} = this.props
     const {position, text, years} = this.state
     return (                               
-      <>                                                       {/* также вместо Fragment можно использовать пустой тег */}   
-        <button onClick={this.nextAge}>{text}</button>      {/* пример обработчика событий */}
+      <EmptyItem active>                                                       {/* также вместо Fragment можно использовать пустой тег, в styled components можно передавать props */}   
+        <Button onClick={this.nextAge}>{text}</Button>      {/* пример обработчика событий */}
         {/* <button onClick={() => this.nextAge()}>{text}</button>  также, когда функция не стрелочная ее можно вызвать через анонимную функцию*/}
-        <h1>My name is {name}, surname - {surname}, age - {years}, position - {position}</h1>
+        <Header>My name is {name}, surname - {surname}, age - {years}, position - {position}</Header>
         <a href={link}>Мой профиль</a>
         <form>
           <span>Введите должность</span>
           <input type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию */}
         </form>
-      </>
+      </EmptyItem>
     )
   }
 }

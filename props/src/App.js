@@ -23,11 +23,11 @@ const WhoAmIFirst = ({name, surname, link}) => {               // аргумен
 }
 
 
-const WhoAmI = ({name, surname, link}) => {               // аргумент props(либо через деструктуризацию {name, surname, link}), это объект и мы передаем данные в него, функция используется как шаблон
+const WhoAmI = ({name, surname, link, className}) => {               // аргумент props(либо через деструктуризацию {name, surname, link}), это объект и мы передаем данные в него, функция используется как шаблон
   return (                               
     <div>
       <h1>My name is {name.firstName}, surname - {surname}</h1>
-      <a href={link}>Мой профиль</a>
+      <a className = {className} href = {link} >Мой профиль</a>
     </div>
   )
 }
@@ -83,16 +83,23 @@ function App() {
   return (
     //<Fragment>                                                           {/** на fragment можно заменить лишние элементы, к примеру <div></div> */}
     // <div className="App">
-    <Wrapper>                                                               
-       <WhoAmIFirst name="Petr" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
+    <Wrapper>                
+                                                     
+       <EmptyItem active> <WhoAmI name="Petr" surname="Ivanov" link="facebook.com" className="test"></WhoAmI> </EmptyItem> 
+
        <WhoAmIFirst name="Semen" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
+
        <WhoAmI name={{firstName: "John"}} surname="Ivanov" link="facebook.com"></WhoAmI>    {/*объект props будет формироваться из тех атрибутов, по сути это и есть props
-       , что мы будем передавать в компонент, значения не изменяемые, чтобы это сделать надо полностью пересоздать компонент, передаваться может все, что угодно */}
-       <WhoAmI name={{firstName: "Alex"}} surname="Pupkin" link="vk.com"></WhoAmI>
+       , что мы будем передавать в компонент, значения не изменяемые (только чтение), чтобы это сделать надо полностью пересоздать компонент, передаваться может все, что угодно */}
+
+       <WhoAmI name="Alex" surname="Pupkin" link="vk.com"></WhoAmI>
+
        <WhoAmINext name={() => {return "Ivan"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
        <WhoAmINext name={() => {return "Vasya"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
+
        <WhoAmIClass name="T800" surname="Ivanov" link="facebook.com"></WhoAmIClass>            {/* props изменить динамически нельзя!!! */}
        <WhoAmIClass name="T1000" surname="Pupkin" link="facebook.com"></WhoAmIClass> 
+
     </Wrapper>
     //</div>
     // </Fragment>
@@ -137,7 +144,7 @@ class WhoAmIClass extends Component {
         <Header>My name is {name}, surname - {surname}, age - {years}, position - {position}</Header>
         <a href={link}>Мой профиль</a>
         <form>
-          <span>Введите должность</span>
+          <span>Введите должность</span>  
           <input type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию */}
         </form>
       </EmptyItem>

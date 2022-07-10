@@ -85,13 +85,11 @@ function App() {
     // <div className="App">
     <Wrapper>                
                                                      
-       <EmptyItem active> <WhoAmI name="Petr" surname="Ivanov" link="facebook.com" className="test"></WhoAmI> </EmptyItem> 
-
+       <EmptyItem active> <WhoAmIFirst name="Petr" surname="Ivanov" link="facebook.com" className="test"></WhoAmIFirst> </EmptyItem>  
        <WhoAmIFirst name="Semen" surname="Ivanov" link="facebook.com"></WhoAmIFirst> 
 
        <WhoAmI name={{firstName: "John"}} surname="Ivanov" link="facebook.com"></WhoAmI>    {/*объект props будет формироваться из тех атрибутов, по сути это и есть props
        , что мы будем передавать в компонент, значения не изменяемые (только чтение), чтобы это сделать надо полностью пересоздать компонент, передаваться может все, что угодно */}
-
        <WhoAmI name="Alex" surname="Pupkin" link="vk.com"></WhoAmI>
 
        <WhoAmINext name={() => {return "Ivan"}} surname="Ivanov" link="facebook.com"></WhoAmINext> 
@@ -108,9 +106,9 @@ function App() {
 
 // СОСТОЯНИЯ КЛАССОВЫХ КОМПОНЕНТОВ
 class WhoAmIClass extends Component {     
-  constructor (props) {                            // для передачи props в классовый компонент используется constructor      
+  constructor (props) {                            // для передачи props в классовый компонент используется constructor (к примеру массив данных data)     
     super(props)                                   // чтобы мы могли их использоваться передаем через super
-    this.state = {                                 // состояние это объект
+    this.state = {                                 // динамически изменяемые параметры
       years: 27,
       text: "+++",
       position: ''
@@ -119,7 +117,7 @@ class WhoAmIClass extends Component {
   }   
   
   nextAge = () => {                // когда функция не стрелочная используется bind (см выше), но это устаревший метод
-    this.setState({                 // команда для изменения состояния, поменяет только то, что указано тут, все остальное оставит как есть                                                                                                               
+    this.setState({                // команда для изменения текущего состояния (запускает перерисовку компонента)        
       years: this.state.years + 1
     })
     this.setState(state => ({             // тоже самое, что и выше, используется когда state зависит от предыдущего состояния (к примеру, счетчик)

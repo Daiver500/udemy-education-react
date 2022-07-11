@@ -142,8 +142,9 @@ class WhoAmIClass extends Component {
         <Header>My name is {name}, surname - {surname}, age - {years}, position - {position}</Header>
         <a href={link}>Мой профиль</a>
         <form>
-          <span>Введите должность</span>  
-          <input type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию */}
+          <label htmlFor='position'>Введите должность</label>  
+          <input id ="position" type="text" onChange={(evt) => this.commitInputChanges(evt, "some color")}></input>          
+          {/*в реакте всегда используется onChange, чтобы передать аргументы мы можем сделать это через функцию, здесь передаем some color */}
         </form>
       </EmptyItem>
     )
